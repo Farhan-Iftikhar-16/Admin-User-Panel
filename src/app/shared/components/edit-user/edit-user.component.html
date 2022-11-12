@@ -85,7 +85,11 @@
               <div class="form-group">
                 <app-form-control>
                   <label for="role">Role <span class="required">*</span></label>
-                  <p-dropdown id="role" (onChange)="onRoleChanged()" [autoDisplayFirst]="false" [options]="roles" [formControlName]="'role'"></p-dropdown>
+                  <div class="d-flex">
+                    <ng-container *ngFor="let role of roles">
+                      <p-radioButton class="flex-grow-1" name="role" (onClick)="onRoleChanged()" [value]="role.value" [label]="role.label" [formControlName]="'role'"></p-radioButton>
+                    </ng-container>
+                  </div>
                 </app-form-control>
               </div>
             </div>
