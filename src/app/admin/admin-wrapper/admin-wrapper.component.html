@@ -1,0 +1,9 @@
+<div class="admin-wrapper-container">
+  <div class="sidebar-container">
+    <app-sidebar></app-sidebar>
+  </div>
+
+  <div class="content-wrapper" [@routeAnimations]="o.isActivated ? o.activatedRoute : ''">
+    <router-outlet #o="outlet"></router-outlet>
+  </div>
+</div>

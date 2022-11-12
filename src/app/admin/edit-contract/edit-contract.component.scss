@@ -1,0 +1,36 @@
+:host::ng-deep {
+  .pi-info-circle {
+    position: absolute;
+    top: 68px;
+    right: 20px;
+    color: darkgray;
+  }
+
+  .p-autocomplete {
+    width: 100%;
+  }
+
+  .p-fileupload {
+    .p-fileupload-buttonbar {
+      padding: 10px !important;
+    }
+
+    .p-fileupload-content {
+      padding: 10px;
+
+      p-progressbar p-messages {
+        display: none !important;
+      }
+    }
+
+    .p-fileupload-files .p-fileupload-row > div:first-child {
+      display: none;
+    }
+
+    .p-fileupload-files .p-fileupload-row > div {
+      padding: 0 !important;
+    }
+  }
+
+
+}

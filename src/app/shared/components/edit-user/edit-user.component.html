@@ -1,0 +1,147 @@
+<div class="edit-patient-container" *ngIf="form">
+  <div class="row mb-5">
+    <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-between align-items-center">
+      <div class="main-heading">
+        <h3>{{form?.get('id').value ? 'Edit Profile' : 'Create User'}}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <form [formGroup]="form">
+        <div class="basic-information-container">
+          <h5>Basic Information</h5>
+
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+              <div class="form-group">
+                <app-form-control>
+                  <label for="userId">User ID <span class="required">*</span></label>
+                  <input type="text" pInputText id="userId" [formControlName]="'userId'">
+                </app-form-control>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <div class="form-group">
+                <app-form-control>
+                  <label for="firstName">First Name <span class="required">*</span></label>
+                  <input type="text" pInputText id="firstName" [formControlName]="'firstName'">
+                </app-form-control>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <div class="form-group">
+                <app-form-control>
+                  <label for="lastName">Last Name <span class="required">*</span></label>
+                  <input type="text" pInputText id="lastName" [formControlName]="'lastName'">
+                </app-form-control>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <div class="form-group">
+                <app-form-control>
+                  <label for="email">Email <span class="required">*</span></label>
+                  <input type="text" pInputText id="email" [formControlName]="'email'">
+                </app-form-control>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <div class="form-group">
+                <app-form-control>
+                  <label for="mobileNumber">Mobile Number <span class="required">*</span></label>
+                  <input type="text" pInputText id="mobileNumber" [formControlName]="'mobileNumber'">
+                </app-form-control>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <div class="form-group">
+                <app-form-control>
+                  <label for="gender">Gender <span class="required">*</span></label>
+                  <p-dropdown id="gender" [autoDisplayFirst]="false" [options]="genders" [formControlName]="'gender'"></p-dropdown>
+                </app-form-control>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <div class="form-group">
+                <app-form-control>
+                  <label for="dateOfBirth">Date Of Birth <span class="required">*</span></label>
+                  <p-calendar [maxDate]="maxDate" id="dateOfBirth" [formControlName]="'dateOfBirth'"></p-calendar>
+                </app-form-control>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="user?.role === 'ADMIN'">
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <div class="form-group">
+                <app-form-control>
+                  <label for="role">Role <span class="required">*</span></label>
+                  <p-dropdown id="role" (onChange)="onRoleChanged()" [autoDisplayFirst]="false" [options]="roles" [formControlName]="'role'"></p-dropdown>
+                </app-form-control>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3" *ngIf="form?.get('role').value === 'CUSTOMER'">
+              <div class="form-group">
+                <app-form-control>
+                  <label for="contractDate">Contract Date <span class="required">*</span></label>
+                  <p-calendar [maxDate]="maxDate" id="contractDate" [formControlName]="'contractDate'"></p-calendar>
+                </app-form-control>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="address-container">
+          <h5>Address & Location</h5>
+
+          <div class="row" [formGroupName]="'addressDetails'">
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <div class="form-group">
+                <app-form-control>
+                  <label for="addressLine1">Address 1</label>
+                  <input type="text" pInputText id="addressLine1" [formControlName]="'addressLine1'">
+                </app-form-control>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <div class="form-group">
+                <app-form-control>
+                  <label for="city">City</label>
+                  <input type="text" pInputText id="city" [formControlName]="'city'">
+                </app-form-control>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <div class="form-group">
+                <app-form-control>
+                  <label for="state">State</label>
+                  <input type="text" pInputText id="state" [formControlName]="'state'">
+                </app-form-control>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <div class="form-group">
+                <app-form-control>
+                  <label for="country">Country</label>
+                  <input type="text" pInputText id="country" [formControlName]="'country'">
+                </app-form-control>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p-button [disabled]="form.invalid" [label]="form?.get('id').value ? 'Save Changes' : 'Create'" class="p-button-success pb-3" (click)="onSaveChangesClicked()"></p-button>
+      </form>
+    </div>
+  </div>
+</div>
+

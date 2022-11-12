@@ -1,0 +1,56 @@
+<div class="contracts-containor">
+  <div class="row mb-5">
+    <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-between align-items-center">
+      <div class="main-heading">
+        <h3>Users</h3>
+      </div>
+      <div class="d-flex">
+        <p-dropdown [options]="statusValueSet" (onChange)="filterContractsList($event)" class="me-3"></p-dropdown>
+
+        <p-button [label]="'Create Contract'" class="p-button-primary" routerLink="/admin/edit-contract/0"></p-button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <p-table [value]="filteredContracts" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+               currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 30%">User</th>
+            <th style="width: 22.5%">Type</th>
+            <th style="width: 22.5%">Document Name</th>
+            <th style="width: 20%">Created At</th>
+            <th style="width: 10%">Status</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-contract>
+          <tr>
+            <td>
+              <div class="d-flex flex-column">
+                <span class="cursor-pointer router-text" [routerLink]="'/admin/edit-contract/' + contract?._id">
+                  {{contract?.user?.name}}
+                </span>
+                <span>{{contract?.userId}}</span>
+              </div>
+            </td>
+            <td>{{contract?.type | titlecase}}</td>
+            <td>{{contract?.file?.originalname}}</td>
+            <td>{{contract?.createdAt | date: 'dd MMMM YYYY'}}</td>
+            <td class="text-center">
+              <p-inputSwitch [(ngModel)]="contract.status" (onChange)="updateContractStatus(contract)"></p-inputSwitch>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6">No users found.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+    </div>
+  </div>
+</div>
+

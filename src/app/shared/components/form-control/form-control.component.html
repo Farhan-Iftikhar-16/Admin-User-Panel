@@ -1,0 +1,4 @@
+<div [class]="'form-control-auth ' + class" *ngIf='fcn' [ngClass]="{ 'has-error': isHighlighted }">
+  <ng-content></ng-content>
+  <span class="invalid-content" *ngIf='isHighlighted'>{{ getError() }}</span>
+</div>

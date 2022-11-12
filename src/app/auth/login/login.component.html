@@ -1,0 +1,39 @@
+<div class="login-container">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-center align-items-center">
+      <h3 class="main-heading">Login</h3>
+    </div>
+  </div>
+
+  <form autocomplete="off" [formGroup]="form" *ngIf="form">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+        <div class="form-group">
+          <app-form-control>
+            <label for="Email">Email</label>
+            <input type="text" pInputText id="Email" [formControlName]="'email'">
+          </app-form-control>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+        <div class="form-group">
+          <app-form-control>
+            <label for="Password">Password</label>
+            <p-password type="password" id="Password" [formControlName]="'password'" [toggleMask]="true" [feedback]="false"></p-password>
+          </app-form-control>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="d-flex justify-content-center">
+          <p-button (click)="onSignInClicked()" class="p-button-primary" label="Login"></p-button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
