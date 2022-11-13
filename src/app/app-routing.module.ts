@@ -1,5 +1,7 @@
 import {RouterModule, Routes} from "@angular/router";
 import {NgModule} from "@angular/core";
+import {UserGuard} from "./guards/user.guard";
+import {PublicGuard} from "./guards/public.guard";
 
 const routes: Routes = [
   {
@@ -9,15 +11,18 @@ const routes: Routes = [
   },
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
+    canActivate: [PublicGuard]
   },
   {
     path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+    canActivate: [UserGuard]
   },
   {
     path: 'user',
-    loadChildren: () => import('./user/user.module').then(m => m.UserModule)
+    loadChildren: () => import('./user/user.module').then(m => m.UserModule),
+    canActivate: [UserGuard]
   }
 ];
 
