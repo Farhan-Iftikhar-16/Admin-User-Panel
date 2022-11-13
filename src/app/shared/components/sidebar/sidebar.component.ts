@@ -28,9 +28,11 @@ export class SidebarComponent implements OnInit {
         ];
       }
 
-      if (user.role === ROLES.USER) {
+      if (user.role === ROLES.CUSTOMER) {
         this.sidebarItems = [
           {label: 'Dashboard', icon: 'pi pi-chart-line', route: '/user/dashboard'},
+          {label: 'Contracts', icon: 'pi pi-file', route: '/user/contracts'},
+          {label: 'Profile', icon: 'pi pi-user', route: '/user/edit-profile/' + user._id}
         ];
       }
     }

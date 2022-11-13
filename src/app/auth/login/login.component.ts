@@ -45,14 +45,13 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.form.value).pipe(takeUntil(this.componentInView)).subscribe(response => {
       this.toastService.success(response.message);
       localStorage.setItem('user', JSON.stringify(response.user));
-      localStorage.setItem('token', JSON.stringify(response.token));
 
       if (response.user.role === ROLES.ADMIN) {
         this.router.navigate(['/admin/dashboard']).then();
         return;
       }
 
-      if (response.user.role === ROLES.USER) {
+      if (response.user.role === ROLES.CUSTOMER) {
         this.router.navigate(['/user/dashboard']).then();
       }
     }, error => {

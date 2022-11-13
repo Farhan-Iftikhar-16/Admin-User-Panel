@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {STATUS, STATUS_VALUE_SET} from "../../config/constant";
 import {Subject, takeUntil} from "rxjs";
 import {ToastService} from "../../services/toast.service";
-import {AdminService} from "../admin.service";
+import {ContractService} from "../../services/contract.service";
 
 @Component({
   selector: 'app-contracts',
@@ -20,8 +20,9 @@ export class ContractsComponent implements OnInit {
 
   constructor(
     private toastService: ToastService,
-    private adminService: AdminService
-  ) { }
+    private contractService: ContractService
+  ) {
+  }
 
   ngOnInit(): void {
     if (localStorage.getItem('user')) {
@@ -32,10 +33,10 @@ export class ContractsComponent implements OnInit {
   }
 
   getContracts(): void {
-    this.adminService.getContracts().pipe(takeUntil(this.componentInView)).subscribe(response => {
+    this.contractService.getContracts().pipe(takeUntil(this.componentInView)).subscribe(response => {
       this.contracts = response.contracts;
       this.filteredContracts = [...this.contracts];
-      this.filteredContracts.forEach(user => user.status = user.status === STATUS.ACTIVE );
+      this.filteredContracts.forEach(user => user.status = user.status === STATUS.ACTIVE);
     }, error => {
       this.toastService.error(error.error.message);
     });
@@ -62,7 +63,7 @@ export class ContractsComponent implements OnInit {
       status: !contract.status ? this.status.INACTIVE : this.status.ACTIVE
     };
 
-    this.adminService.updateContractStatus(contract._id, params).pipe(takeUntil(this.componentInView)).subscribe(response => {
+    this.contractService.updateContractStatus(contract._id, params).pipe(takeUntil(this.componentInView)).subscribe(response => {
       this.toastService.success(response.message);
       this.getContracts();
     }, error => {

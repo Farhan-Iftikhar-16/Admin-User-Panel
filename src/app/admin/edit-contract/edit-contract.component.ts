@@ -4,8 +4,8 @@ import {Subject, takeUntil} from "rxjs";
 import {UtilService} from "../../services/util.service";
 import {ToastService} from "../../services/toast.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AdminService} from "../admin.service";
 import {UserService} from "../../user/user.service";
+import {ContractService} from "../../services/contract.service";
 
 @Component({
   selector: 'app-edit-contract',
@@ -31,7 +31,7 @@ export class EditContractComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private utilService: UtilService,
-    private adminService: AdminService,
+    private contractService: ContractService,
     private userService: UserService,
     private toastService: ToastService,
     private router: Router,
@@ -64,7 +64,7 @@ export class EditContractComponent implements OnInit {
   }
 
   getContractDetails(id): void {
-    this.adminService.getContractById(id).pipe(takeUntil(this.componentInView)).subscribe(response => {
+    this.contractService.getContractById(id).pipe(takeUntil(this.componentInView)).subscribe(response => {
       this.form.patchValue(response.contract);
       this.form.get('id').setValue(response.contract._id);
       this.autoComplete['inputEL']['nativeElement']['value'] = response.contract.userId;
@@ -100,7 +100,7 @@ export class EditContractComponent implements OnInit {
   }
 
   createContract(params): void {
-    this.adminService.createContract(params).pipe(takeUntil(this.componentInView)).subscribe(response => {
+    this.contractService.createContract(params).pipe(takeUntil(this.componentInView)).subscribe(response => {
       this.toastService.success(response.message);
       this.router.navigate(['/admin/contracts']).then();
     }, error => {
@@ -109,7 +109,7 @@ export class EditContractComponent implements OnInit {
   }
 
   updateContract(params): void {
-    this.adminService.updateContract(params).pipe(takeUntil(this.componentInView)).subscribe(response => {
+    this.contractService.updateContract(params).pipe(takeUntil(this.componentInView)).subscribe(response => {
       this.toastService.success(response.message);
       this.router.navigate(['/admin/users']).then();
     }, error => {

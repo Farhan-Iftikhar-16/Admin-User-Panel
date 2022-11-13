@@ -38,7 +38,6 @@ export class UsersComponent implements OnInit {
       this.users = response.users;
       this.filteredUsers = [...this.users];
       this.filteredUsers.forEach(user => user.status = user.status === 'ACTIVE');
-      console.log(this.filteredUsers);
     }, error => {
       this.toastService.error(error.error.message);
     });

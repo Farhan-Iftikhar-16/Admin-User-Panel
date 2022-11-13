@@ -11,7 +11,7 @@ const ERROR_MESSAGES = {
 
 const ROLES = {
   ADMIN: 'ADMIN',
-  USER: 'USER'
+  CUSTOMER: 'CUSTOMER'
 }
 
 const GENDERS = [
@@ -36,16 +36,11 @@ const ROLES_SELECT_ITEM = [
   {label: 'Customer', value: 'CUSTOMER'}
 ]
 
-const VALIDATION_PATTERNS = {
-  PASSWORD: '^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[`\\\'\\~!@#%$%^&*()_+\\-=\\[\\]{};:"\\|,.<>\\/?])[A-Za-z\\d*`\\\'\\~!@#%$%^&*()_+\\-=\\[\\]{};:"\\|,.<>\\/?]{8,}$'
-}
-
 export {
   ERROR_MESSAGES,
   ROLES,
   GENDERS,
   STATUS,
   STATUS_VALUE_SET,
-  VALIDATION_PATTERNS,
   ROLES_SELECT_ITEM
 };
