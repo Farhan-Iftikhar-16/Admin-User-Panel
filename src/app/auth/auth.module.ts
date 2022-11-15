@@ -5,11 +5,15 @@ import {SharedModule} from "../shared/shared.module";
 import {AuthRoutingModule} from "./auth-routing.module";
 import {AuthWrapperComponent} from "./auth-wrapper/auth-wrapper.component";
 import {AuthService} from "./auth.service";
+import {ResetPasswordComponent} from './reset-password/reset-password.component';
+import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
     AuthWrapperComponent,
-    LoginComponent
+    LoginComponent,
+    ResetPasswordComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     CommonModule,

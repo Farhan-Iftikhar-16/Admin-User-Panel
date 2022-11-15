@@ -96,6 +96,8 @@ export class EditUserComponent implements OnInit {
 
     let params = {
       ...this.form.value,
+      userId: this.form.get('userId').value,
+      contractDate: this.form.get('contractDate').value
     };
 
     !params.id ? this.addUser(params) : this.updateUser(params);

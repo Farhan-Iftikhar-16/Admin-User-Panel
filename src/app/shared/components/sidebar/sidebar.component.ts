@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
 export class SidebarComponent implements OnInit {
 
   sidebarItems = [];
+  user;
 
   constructor(
     private router: Router
@@ -18,7 +19,8 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     if (localStorage.getItem('user')) {
-      const user = JSON.parse(localStorage.getItem('user'))
+      const user = JSON.parse(localStorage.getItem('user'));
+      this.user = user;
 
       if (user.role === ROLES.ADMIN) {
         this.sidebarItems = [

@@ -36,11 +36,16 @@ const ROLES_SELECT_ITEM = [
   {label: 'Customer', value: 'CUSTOMER'}
 ]
 
+const PATTERNS = {
+  PASSWORD: '^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[`\\\'\\~!@#%$%^&*()_+\\-=\\[\\]{};:"\\|,.<>\\/?])[A-Za-z\\d*`\\\'\\~!@#%$%^&*()_+\\-=\\[\\]{};:"\\|,.<>\\/?]{8,}$'
+}
+
 export {
   ERROR_MESSAGES,
   ROLES,
   GENDERS,
   STATUS,
   STATUS_VALUE_SET,
-  ROLES_SELECT_ITEM
+  ROLES_SELECT_ITEM,
+  PATTERNS
 };
