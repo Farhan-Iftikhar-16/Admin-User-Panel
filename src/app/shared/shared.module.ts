@@ -34,6 +34,7 @@ import {PaginatorModule} from 'primeng/paginator';
 import {CarouselModule} from 'primeng/carousel';
 import {EditUserComponent} from './components/edit-user/edit-user.component';
 import {FileUploadModule} from "primeng/fileupload";
+import {StripePaymentFormComponent} from './components/stripe-payment-form/stripe-payment-form.component';
 
 const MODULES = [
   FormsModule,
@@ -72,12 +73,14 @@ const MODULES = [
 
 const COMPONENTS = [
   FormControlComponent,
-  SidebarComponent
+  SidebarComponent,
+  EditUserComponent,
+  StripePaymentFormComponent
 ];
 
 
 @NgModule({
-  declarations: [...COMPONENTS, EditUserComponent],
+  declarations: COMPONENTS,
   imports: [CommonModule, ...MODULES, RouterModule],
   exports: [...MODULES, ...COMPONENTS],
   providers: []

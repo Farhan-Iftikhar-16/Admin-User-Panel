@@ -6,6 +6,7 @@ import {UsersComponent} from "./users/users.component";
 import {EditUserComponent} from "../shared/components/edit-user/edit-user.component";
 import {ContractsComponent} from "./contracts/contracts.component";
 import {EditContractComponent} from "./edit-contract/edit-contract.component";
+import {StripePaymentFormComponent} from "../shared/components/stripe-payment-form/stripe-payment-form.component";
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
       {
         path:'edit-contract/:id',
         component: EditContractComponent
+      },
+      {
+        path:'stripe-payment',
+        component: StripePaymentFormComponent
       }
     ]
   }

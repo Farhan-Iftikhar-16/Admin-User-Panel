@@ -37,4 +37,12 @@ export class UserService {
   updateUserStatus(id, params): Observable<any> {
     return this.apiService.put(`users/update-user-status/${id}`, params);
   }
+
+  payAmount(params): Observable<any> {
+    return this.apiService.post(`stripe/payment`, params);
+  }
+
+  getProducts(): Observable<any> {
+    return this.apiService.get(`stripe/products`);
+  }
 }
