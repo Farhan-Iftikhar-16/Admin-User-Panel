@@ -38,11 +38,19 @@ export class UserService {
     return this.apiService.put(`users/update-user-status/${id}`, params);
   }
 
-  payAmount(params): Observable<any> {
-    return this.apiService.post(`stripe/payment`, params);
+  createCustomerAndPayAmount(params): Observable<any> {
+    return this.apiService.post(`stripe/create-customer-and-pay-amount`, params);
   }
 
-  getProducts(): Observable<any> {
-    return this.apiService.get(`stripe/products`);
+  payAmount(params): Observable<any> {
+    return this.apiService.post(`stripe/pay-amount`, params);
+  }
+
+  getCustomerById(id): Observable<any> {
+    return this.apiService.get(`stripe/get-customer-by-id/${id}`);
+  }
+
+  getUserTransactions(id): Observable<any> {
+    return this.apiService.get(`stripe/transactions/${id}`);
   }
 }

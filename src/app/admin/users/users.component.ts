@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {STATUS, STATUS_VALUE_SET} from "../../config/constant";
 import {Subject, takeUntil} from "rxjs";
 import {ToastService} from "../../services/toast.service";
-import {AdminService} from "../admin.service";
 import * as moment from "moment";
 import {UserService} from "../../user/user.service";
 

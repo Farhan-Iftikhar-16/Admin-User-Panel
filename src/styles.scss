@@ -386,6 +386,10 @@ p-password {
   }
 }
 
+iframe {
+  background: rgb(0 0 0) !important;
+}
+
 @media (max-width: 576px) {
   p-paginator .p-paginator {
     display: block !important;

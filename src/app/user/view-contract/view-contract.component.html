@@ -18,6 +18,15 @@
       <h6>Document: {{contract?.file?.originalname}}</h6>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12">
+      <h6>Interval: {{contract?.interval}}</h6>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <h6>Interval Count: {{contract?.intervalCount}}</h6>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <h6>Status: {{getDisplayAbleStatus(contract?.status)}}</h6>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
       <p-button class="p-button-teritory" label="Download Document" (click)="onDownloadDocumentClicked()" icon="pi pi-download"></p-button>
     </div>
   </div>

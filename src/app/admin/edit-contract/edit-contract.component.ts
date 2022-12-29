@@ -24,6 +24,12 @@ export class EditContractComponent implements OnInit {
     {label: 'Subscriptions', value: 'SUBSCRIPTIONS'},
     {label: 'Delivery Order', value: 'DELIVERY_ORDER'},
   ];
+  intervalOptions = [
+    {label: 'Day(s)', value: 'DAY'},
+    {label: 'Week(s)', value: 'WEEK'},
+    {label: 'Month(s)', value: 'MONTH'},
+    {label: 'Year(s)', value: 'YEAR'}
+  ];
   componentInView = new Subject();
   @ViewChild('autoComplete') autoComplete: ElementRef;
   @ViewChild('fileUpload') fileUpload: ElementRef;
@@ -59,6 +65,9 @@ export class EditContractComponent implements OnInit {
       type: ['', Validators.required],
       userId: ['', Validators.required],
       file: ['', Validators.required],
+      interval: ['', Validators.required],
+      intervalCount: ['', Validators.required],
+      price: [200, Validators.required],
       contractDate: [{value: new Date(), disabled: true}, Validators.required]
     });
   }

@@ -5,6 +5,7 @@ import {UserContractsComponent} from "./user-contracts/user-contracts.component"
 import {EditUserComponent} from "../shared/components/edit-user/edit-user.component";
 import {UserDashboardComponent} from "./user-dashboard/user-dashboard.component";
 import {ViewContractComponent} from "./view-contract/view-contract.component";
+import {TransactionsComponent} from "./transactions/transactions.component";
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'edit-profile/:id',
         component: EditUserComponent
+      },
+      {
+        path: 'transactions',
+        component: TransactionsComponent
       }
     ]
   }

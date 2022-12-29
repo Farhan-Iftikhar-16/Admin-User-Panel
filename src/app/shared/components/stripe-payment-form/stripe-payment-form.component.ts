@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {environment} from "../../../../environments/environment";
-import {AdminService} from "../../../admin/admin.service";
 import {ToastService} from "../../../services/toast.service";
 import {UserService} from "../../../user/user.service";
 import {Subject, takeUntil} from "rxjs";
@@ -12,9 +11,13 @@ import {Subject, takeUntil} from "rxjs";
 })
 export class StripePaymentFormComponent implements OnInit {
 
+  user;
   stripe: any = null;
   products: any[] = [];
   componentInView = new Subject();
+  @Input() contract;
+  @Input() customer;
+  @Output() closeDialog = new EventEmitter();
 
   constructor(
     private userService: UserService,
@@ -22,8 +25,10 @@ export class StripePaymentFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (localStorage.getItem('user')) {
+      this.user = JSON.parse(localStorage.getItem('user'));
+    }
     this.loadStripe();
-    this.getProducts();
   }
 
   loadStripe(): void {
@@ -33,42 +38,45 @@ export class StripePaymentFormComponent implements OnInit {
       scriptElement.type = "text/javascript";
       scriptElement.src = "https://checkout.stripe.com/checkout.js";
       window.document.body.appendChild(scriptElement);
+      this.checkout();
     }
   }
 
-  getProducts(): void {
-    this.userService.getProducts().pipe(takeUntil(this.componentInView)).subscribe(response => {
-      this.products = response;
-    }, error => {
-      this.toastService.error(error);
-    })
-  }
-
-  onPayClicked(amount: any): void {
+  checkout(): void {
     const stripe = (<any>window).StripeCheckout.configure({
       key: environment.STRIPE_PUBLIC_KEY,
       locale: 'auto',
       token: (token) => {
-       this.payAmount(amount, token);
+       this.createCustomerAndPayAmount(token);
       }
     });
 
     stripe.open({
       name: 'Stripe Gateway',
-      amount: amount * 100
+      amount: +this.contract.price
     });
   }
 
-  payAmount(amount, token): void {
+  createCustomerAndPayAmount(token): void {
     const params = {
-      amount: amount,
+      amount: +this.contract.price / 100,
       token: token.id,
-      email: token.email
+      email: token.email,
+      name: this.user.name,
+      _id: this.user._id,
+      userId: this.user.userId,
+      default_price: this.contract.product.default_price,
+      product: this.contract.product.id
     }
 
-    this.userService.payAmount(params).pipe(takeUntil(this.componentInView)).subscribe(response => {
+    this.userService.createCustomerAndPayAmount(params).pipe(takeUntil(this.componentInView)).subscribe(response => {
       this.toastService.success(response.message);
+      this.user.customer = response.customer;
+      this.closeDialog.emit();
+
+      localStorage.setItem('user', JSON.stringify(this.user));
     }, error => {
+      this.closeDialog.emit();
       this.toastService.error(error);
     });
   }

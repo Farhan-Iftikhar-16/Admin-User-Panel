@@ -47,6 +47,26 @@
           </div>
 
           <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-12 mb-3">
+              <div class="form-group">
+                <app-form-control>
+                  <label for="intervalCount">Interval Count <span class="required">*</span></label>
+                  <input type="text" pInputText id="intervalCount" [formControlName]="'intervalCount'">
+                </app-form-control>
+              </div>
+            </div>
+
+            <div class="col-lg-10 col-md-10 col-sm-12 mb-3">
+              <div class="form-group">
+                <app-form-control>
+                  <label for="interval">Interval <span class="required">*</span></label>
+                  <p-dropdown [options]="intervalOptions" [autoDisplayFirst]="false" id="interval" [formControlName]="'interval'"></p-dropdown>
+                </app-form-control>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 mb-3 position-relative">
               <div *ngIf="form.get('id').value && uploadDocumentName" class="mb-3">
                 <label>Document:</label> {{uploadDocumentName}}
@@ -54,7 +74,6 @@
               <i class="pi pi-info-circle" [pTooltip]="'Only PDF allowed'" [tooltipPosition]="'left'"></i>
               <p-fileUpload #fileUpload [showUploadButton]="false" [chooseLabel]="'Upload Document'" (onSelect)="onFileSelect($event)" [showCancelButton]="false" [multiple]="false" accept="application/pdf"></p-fileUpload>
             </div>
-
           </div>
         </div>
         <p-button [disabled]="form.invalid" [label]="form?.get('id').value ? 'Save Changes' : 'Create Contract'" class="p-button-success pb-3" (click)="onSaveChangesClicked()"></p-button>

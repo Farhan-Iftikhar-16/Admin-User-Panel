@@ -3,6 +3,7 @@ import {STATUS, STATUS_VALUE_SET} from "../../config/constant";
 import {Subject, takeUntil} from "rxjs";
 import {ToastService} from "../../services/toast.service";
 import {ContractService} from "../../services/contract.service";
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'app-user-contracts',
@@ -12,6 +13,9 @@ import {ContractService} from "../../services/contract.service";
 export class UserContractsComponent implements OnInit {
 
   user;
+  customer;
+  selectedContract;
+  showStripePaymentDialog = false;
   contracts = [];
   status = STATUS;
   statusValueSet = STATUS_VALUE_SET;
@@ -19,13 +23,18 @@ export class UserContractsComponent implements OnInit {
 
   constructor(
     private toastService: ToastService,
-    private contractService: ContractService
+    private contractService: ContractService,
+    private userService: UserService
   ) {
   }
 
   ngOnInit(): void {
     if (localStorage.getItem('user')) {
       this.user = JSON.parse(localStorage.getItem('user'));
+
+      if (this.user.customer) {
+        this.getCustomerById();
+      }
     }
 
     this.getContractsByUserId();
@@ -33,6 +42,40 @@ export class UserContractsComponent implements OnInit {
 
   getContractsByUserId(): void {
     this.contractService.getContractsByUserId(this.user.userId).pipe(takeUntil(this.componentInView)).subscribe(response => {
+      this.contracts = response.contracts;
+    }, error => {
+      this.toastService.error(error.error.message);
+    });
+  }
+
+  getCustomerById(): void {
+    this.userService.getCustomerById(this.user.customer).pipe(takeUntil(this.componentInView)).subscribe(response => {
+      this.customer = response.customer;
+    }, error => {
+      this.toastService.error(error.error.message);
+    });
+  }
+
+  onSubscribeClicked(contract): void {
+    this.selectedContract = contract;
+    if (this.customer && this.customer.default_source) {
+      this.payAmount();
+      return;
+    }
+
+    this.showStripePaymentDialog = true
+  }
+
+  payAmount(): void {
+    const params = {
+      productId: this.selectedContract.product.id,
+      defaultPrice: this.selectedContract.product.default_price,
+      card: this.customer.default_source,
+      amount: this.selectedContract.price,
+      customer: this.customer.id
+    };
+
+    this.userService.payAmount(params).pipe(takeUntil(this.componentInView)).subscribe(response => {
       this.contracts = response.contracts;
     }, error => {
       this.toastService.error(error.error.message);

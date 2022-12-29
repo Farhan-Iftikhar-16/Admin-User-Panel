@@ -42,4 +42,8 @@ export class ViewContractComponent implements OnInit {
   onDownloadDocumentClicked(): void {
     window.open(this.API_URL + 'public/files/' + this.contract.file.filename);
   }
+
+  getDisplayAbleStatus(status): void {
+    return status.split('_').join(' ');
+  }
 }
