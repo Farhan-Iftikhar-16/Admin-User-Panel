@@ -43,7 +43,7 @@ export class ViewContractComponent implements OnInit {
     window.open(this.API_URL + 'public/files/' + this.contract.file.filename);
   }
 
-  getDisplayAbleStatus(status): void {
+  getDisplayAbleStatus(status): string {
     return status.split('_').join(' ');
   }
 }

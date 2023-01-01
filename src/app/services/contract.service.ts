@@ -47,4 +47,8 @@ export class ContractService {
   getContractsByUserId(userId): Observable<any> {
     return this.apiService.get(`contracts/get-contracts-by-user-id/${userId}`);
   }
+
+  contractSigned(contractId): Observable<any> {
+    return this.apiService.put(`contracts/contract-signed`, {contractId: contractId});
+  }
 }

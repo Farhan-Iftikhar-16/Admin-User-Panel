@@ -4,6 +4,7 @@ import {Subject, takeUntil} from "rxjs";
 import {ToastService} from "../../services/toast.service";
 import {ContractService} from "../../services/contract.service";
 import {UserService} from "../user.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-user-contracts',
@@ -24,7 +25,8 @@ export class UserContractsComponent implements OnInit {
   constructor(
     private toastService: ToastService,
     private contractService: ContractService,
-    private userService: UserService
+    private userService: UserService,
+    private activatedRoute: ActivatedRoute
   ) {
   }
 
@@ -37,7 +39,23 @@ export class UserContractsComponent implements OnInit {
       }
     }
 
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params.state && params.contract && params.event === 'signing_complete') {
+        this.contractSigned(params.contract);
+        return;
+      }
+    });
+
     this.getContractsByUserId();
+  }
+
+  contractSigned(contractId): void {
+    this.contractService.contractSigned(contractId).pipe(takeUntil(this.componentInView)).subscribe(response => {
+      this.toastService.success(response.message);
+      this.getContractsByUserId();
+    }, error => {
+      this.toastService.error(error.error.message);
+    });
   }
 
   getContractsByUserId(): void {
@@ -72,13 +90,26 @@ export class UserContractsComponent implements OnInit {
       defaultPrice: this.selectedContract.product.default_price,
       card: this.customer.default_source,
       amount: this.selectedContract.price,
-      customer: this.customer.id
+      customer: this.customer.id,
+      contract: this.selectedContract._id
     };
 
     this.userService.payAmount(params).pipe(takeUntil(this.componentInView)).subscribe(response => {
-      this.contracts = response.contracts;
+      this.toastService.success(response.message);
+      this.getContractsByUserId();
     }, error => {
       this.toastService.error(error.error.message);
     });
+  }
+
+  getDisplayAbleStatus(status): string {
+    return status.split('_').join(' ');
+  }
+
+  onSignClicked(contract): void {
+    const link = document.createElement('a');
+    link.href = contract.contractSigningURL;
+    link.click();
+    link.remove();
   }
 }

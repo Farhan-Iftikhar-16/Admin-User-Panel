@@ -36,7 +36,7 @@ export class ContractsComponent implements OnInit {
     this.contractService.getContracts().pipe(takeUntil(this.componentInView)).subscribe(response => {
       this.contracts = response.contracts;
       this.filteredContracts = [...this.contracts];
-      this.filteredContracts.forEach(user => user.status = user.status === STATUS.ACTIVE);
+      this.filteredContracts.forEach(contract => contract.isActive = contract.status !== STATUS.INACTIVE);
     }, error => {
       this.toastService.error(error.error.message);
     });
@@ -51,16 +51,16 @@ export class ContractsComponent implements OnInit {
     }
 
     if (value === 'ACTIVE') {
-      this.filteredContracts = this.contracts.filter(user => user.status === 'ACTIVE');
+      this.filteredContracts = this.contracts.filter(user => user.isActive);
       return;
     }
 
-    this.filteredContracts = this.contracts.filter(user => user.status === 'INACTIVE');
+    this.filteredContracts = this.contracts.filter(user => !user.isActive);
   }
 
   updateContractStatus(contract): void {
     const params = {
-      status: !contract.status ? this.status.INACTIVE : this.status.ACTIVE
+      status: !contract.isActive ? this.status.INACTIVE : this.status.ACTIVE
     };
 
     this.contractService.updateContractStatus(contract._id, params).pipe(takeUntil(this.componentInView)).subscribe(response => {
@@ -69,6 +69,10 @@ export class ContractsComponent implements OnInit {
     }, error => {
       this.toastService.error(error.error.message);
     });
+  }
+
+  getDisplayAbleStatus(status): string {
+    return status.split('_').join(' ');
   }
 
 }
