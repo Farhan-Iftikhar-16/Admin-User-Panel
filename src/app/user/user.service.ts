@@ -50,7 +50,23 @@ export class UserService {
     return this.apiService.get(`stripe/get-customer-by-id/${id}`);
   }
 
-  getUserTransactions(id): Observable<any> {
-    return this.apiService.get(`stripe/transactions/${id}`);
+  getUserTransactions(customerId?: string): Observable<any> {
+    if (customerId) {
+      let queryParams = new HttpParams();
+      queryParams = queryParams.set('customer', customerId);
+      return this.apiService.get(`stripe/transactions`, queryParams);
+    }
+
+    return this.apiService.get(`stripe/transactions`);
+  }
+
+  getSubscriptions(customerId?: string): Observable<any> {
+    if (customerId) {
+      let queryParams = new HttpParams();
+      queryParams = queryParams.set('customer', customerId);
+      return this.apiService.get(`stripe/subscriptions`, queryParams);
+    }
+
+    return this.apiService.get(`stripe/subscriptions`);
   }
 }

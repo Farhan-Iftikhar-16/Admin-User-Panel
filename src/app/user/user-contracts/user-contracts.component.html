@@ -25,7 +25,7 @@
           <tr>
             <td>{{contract?.type | titlecase}}</td>
             <td>{{contract?.documentName}}</td>
-            <td>$ {{+contract?.price / 100}}</td>
+            <td>$ {{(+contract?.price)?.toFixed(2)}}</td>
             <td>Every {{contract?.intervalCount}} {{contract?.interval}}S</td>
             <td>{{getDisplayAbleStatus(contract?.status) | titlecase}}</td>
             <td>

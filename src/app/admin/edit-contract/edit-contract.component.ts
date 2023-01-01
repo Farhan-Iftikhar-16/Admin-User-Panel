@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, PatternValidator, Validators} from "@angular/forms";
 import {Subject, takeUntil} from "rxjs";
 import {UtilService} from "../../services/util.service";
 import {ToastService} from "../../services/toast.service";
@@ -67,7 +67,7 @@ export class EditContractComponent implements OnInit {
       file: ['', Validators.required],
       interval: ['', Validators.required],
       intervalCount: ['', Validators.required],
-      price: [200, Validators.required],
+      price: ['', Validators.compose([Validators.required, Validators.pattern('^[\\d\\.,]+$')])],
       contractDate: [{value: new Date(), disabled: true}, Validators.required]
     });
   }

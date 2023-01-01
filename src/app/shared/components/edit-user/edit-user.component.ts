@@ -71,6 +71,7 @@ export class EditUserComponent implements OnInit {
     this.userService.getUserDetails(id).pipe(takeUntil(this.componentInView)).subscribe(response => {
       this.form.patchValue(response.user);
       this.form.get('id').setValue(response.user._id);
+      this.form.get('dateOfBirth').setValue(new Date(+response.user.dateOfBirth));
     }, error => {
       this.toastService.error(error.error.message);
     });
@@ -97,7 +98,8 @@ export class EditUserComponent implements OnInit {
     let params = {
       ...this.form.value,
       userId: this.form.get('userId').value,
-      contractDate: this.form.get('contractDate').value
+      contractDate: this.form.get('contractDate').value,
+      dateOfBirth: new Date(this.form.get('dateOfBirth').value).getTime()
     };
 
     !params.id ? this.addUser(params) : this.updateUser(params);

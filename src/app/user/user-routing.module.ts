@@ -5,7 +5,8 @@ import {UserContractsComponent} from "./user-contracts/user-contracts.component"
 import {EditUserComponent} from "../shared/components/edit-user/edit-user.component";
 import {UserDashboardComponent} from "./user-dashboard/user-dashboard.component";
 import {ViewContractComponent} from "./view-contract/view-contract.component";
-import {TransactionsComponent} from "./transactions/transactions.component";
+import {TransactionsComponent} from "../shared/components/transactions/transactions.component";
+import {UserSubscriptionsComponent} from "../shared/components/user-subscriptions/user-subscriptions.component";
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
       {
         path: 'transactions',
         component: TransactionsComponent
+      },
+      {
+        path: 'subscriptions',
+        component: UserSubscriptionsComponent
       }
     ]
   }

@@ -26,7 +26,9 @@ export class SidebarComponent implements OnInit {
         this.sidebarItems = [
           {label: 'Dashboard', icon: 'pi pi-chart-line', route: '/admin/dashboard'},
           {label: 'Users', icon: 'pi pi-users', route: '/admin/users'},
-          {label: 'Contract', icon: 'pi pi-file', route: '/admin/contracts'}
+          {label: 'Contract', icon: 'pi pi-file', route: '/admin/contracts'},
+          {label: 'Transactions', icon: 'pi pi-user', route: '/admin/transactions'},
+          {label: 'Subscriptions', icon: 'pi pi-user', route: '/admin/subscriptions'}
         ];
       }
 
@@ -36,6 +38,7 @@ export class SidebarComponent implements OnInit {
           {label: 'Contracts', icon: 'pi pi-file', route: '/user/contracts'},
           {label: 'Profile', icon: 'pi pi-user', route: '/user/edit-profile/' + user._id},
           {label: 'Transactions', icon: 'pi pi-user', route: '/user/transactions'},
+          {label: 'Subscriptions', icon: 'pi pi-user', route: '/user/subscriptions'}
         ];
       }
     }

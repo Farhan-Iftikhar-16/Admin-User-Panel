@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from "../user.service";
-import {ToastService} from "../../services/toast.service";
+import {UserService} from "../../../user/user.service";
+import {ToastService} from "../../../services/toast.service";
 import {Subject, takeUntil} from "rxjs";
-import * as moment from "moment";
+import {ROLES} from "../../../config/constant";
 
 @Component({
   selector: 'app-transactions',
@@ -11,6 +11,7 @@ import * as moment from "moment";
 })
 export class TransactionsComponent implements OnInit {
 
+  user;
   transactions = [];
   componentInView = new Subject();
 
@@ -20,14 +21,13 @@ export class TransactionsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user && user.customer) {
-      this.getUserTransactions(user.customer);
-    }
+    this.user = JSON.parse(localStorage.getItem('user'));
+
+    this.getUserTransactions();
   }
 
-  getUserTransactions(customerId): void {
-    this.userService.getUserTransactions(customerId).pipe(takeUntil(this.componentInView)).subscribe(response => {
+  getUserTransactions(): void {
+    this.userService.getUserTransactions(this.user.role === ROLES.CUSTOMER ? this.user.customer : null).pipe(takeUntil(this.componentInView)).subscribe(response => {
       this.transactions = response.transactions;
     }, error => {
       this.toastService.error(error);

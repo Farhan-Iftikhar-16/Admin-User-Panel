@@ -7,6 +7,8 @@ import {EditUserComponent} from "../shared/components/edit-user/edit-user.compon
 import {ContractsComponent} from "./contracts/contracts.component";
 import {EditContractComponent} from "./edit-contract/edit-contract.component";
 import {StripePaymentFormComponent} from "../shared/components/stripe-payment-form/stripe-payment-form.component";
+import {TransactionsComponent} from "../shared/components/transactions/transactions.component";
+import {UserSubscriptionsComponent} from "../shared/components/user-subscriptions/user-subscriptions.component";
 
 const routes: Routes = [
   {
@@ -39,8 +41,12 @@ const routes: Routes = [
         component: EditContractComponent
       },
       {
-        path:'stripe-payment',
-        component: StripePaymentFormComponent
+        path: 'transactions',
+        component: TransactionsComponent
+      },
+      {
+        path: 'subscriptions',
+        component: UserSubscriptionsComponent
       }
     ]
   }

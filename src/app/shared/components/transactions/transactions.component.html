@@ -13,27 +13,31 @@
                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
         <ng-template pTemplate="header">
           <tr>
-            <th style="width: 25%">Type</th>
-            <th style="width: 25%">NET</th>
-            <th style="width: 25%">Amount</th>
-            <th style="width: 25%">Fee</th>
+            <th style="width: 20%" *ngIf="user.role === 'ADMIN'">Customer</th>
+            <th style="width: 20%">Type</th>
+            <th style="width: 20%">NET</th>
+            <th style="width: 20%">Amount</th>
+            <th style="width: 20%">Fee</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-transaction>
           <tr>
+            <td *ngIf="user.role === 'ADMIN'">
+              <p>{{transaction.customer.name | titlecase}}</p>
+              <p>{{transaction.customer.email}}</p>
+            </td>
             <td>{{transaction?.type?.toUpperCase()}}</td>
             <td>$ {{((transaction.amount / 100) - (transaction.fee / 100)).toFixed(2)}}</td>
-            <td>${{(transaction.amount / 100).toFixed(2)}}</td>
-            <td>${{(transaction.fee / 100).toFixed(2)}}</td>
+            <td>$ {{(transaction.amount / 100).toFixed(2)}}</td>
+            <td>$ {{(transaction.fee / 100).toFixed(2)}}</td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
           <tr>
-            <td colspan="6">No transactions found.</td>
+            <td [colSpan]="user.role === 'Admin' ? 5 : 4">No transactions found.</td>
           </tr>
         </ng-template>
       </p-table>
-
     </div>
   </div>
 </div>

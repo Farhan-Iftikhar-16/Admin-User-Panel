@@ -6,7 +6,8 @@ import {UserWrapperComponent} from './user-wrapper/user-wrapper.component';
 import {UserRoutingModule} from "./user-routing.module";
 import {UserDashboardComponent} from './user-dashboard/user-dashboard.component';
 import { ViewContractComponent } from './view-contract/view-contract.component';
-import { TransactionsComponent } from './transactions/transactions.component';
+import { TransactionsComponent } from '../shared/components/transactions/transactions.component';
+import { UserSubscriptionsComponent } from '../shared/components/user-subscriptions/user-subscriptions.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { TransactionsComponent } from './transactions/transactions.component';
     UserWrapperComponent,
     UserDashboardComponent,
     ViewContractComponent,
-    TransactionsComponent
+    TransactionsComponent,
+    UserSubscriptionsComponent
   ],
   imports: [
     CommonModule,
