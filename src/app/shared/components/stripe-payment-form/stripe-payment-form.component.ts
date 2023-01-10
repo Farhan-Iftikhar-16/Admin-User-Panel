@@ -53,20 +53,24 @@ export class StripePaymentFormComponent implements OnInit {
 
     stripe.open({
       name: 'Stripe Gateway',
-      amount: +this.contract.price
+      amount: +this.contract.price * 100
     });
   }
 
   createCustomerAndPayAmount(token): void {
+    const stipe = window.document.getElementById('stripe-script');
+    stipe.remove();
+
     const params = {
-      amount: +this.contract.price / 100,
+      amount: +this.contract.price,
       token: token.id,
       email: token.email,
       name: this.user.name,
       _id: this.user._id,
       userId: this.user.userId,
       default_price: this.contract.product.default_price,
-      product: this.contract.product.id
+      product: this.contract.product.id,
+      customer: this.user.customer ? this.user.customer : null
     }
 
     this.userService.createCustomerAndPayAmount(params).pipe(takeUntil(this.componentInView)).subscribe(response => {

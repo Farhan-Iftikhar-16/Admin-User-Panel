@@ -7,6 +7,7 @@ import {UserDashboardComponent} from "./user-dashboard/user-dashboard.component"
 import {ViewContractComponent} from "./view-contract/view-contract.component";
 import {TransactionsComponent} from "../shared/components/transactions/transactions.component";
 import {UserSubscriptionsComponent} from "../shared/components/user-subscriptions/user-subscriptions.component";
+import {CardsComponent} from "./cards/cards.component";
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
       {
         path: 'subscriptions',
         component: UserSubscriptionsComponent
+      },
+      {
+        path: 'cards',
+        component: CardsComponent
       }
     ]
   }

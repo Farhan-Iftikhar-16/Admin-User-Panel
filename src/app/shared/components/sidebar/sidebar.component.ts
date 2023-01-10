@@ -38,7 +38,8 @@ export class SidebarComponent implements OnInit {
           {label: 'Contracts', icon: 'pi pi-file', route: '/user/contracts'},
           {label: 'Profile', icon: 'pi pi-user', route: '/user/edit-profile/' + user._id},
           {label: 'Transactions', icon: 'pi pi-user', route: '/user/transactions'},
-          {label: 'Subscriptions', icon: 'pi pi-user', route: '/user/subscriptions'}
+          {label: 'Subscriptions', icon: 'pi pi-user', route: '/user/subscriptions'},
+          {label: 'Cards', icon: 'pi pi-credit-card', route: '/user/cards'}
         ];
       }
     }

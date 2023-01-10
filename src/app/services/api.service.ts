@@ -29,4 +29,8 @@ export class ApiService {
     return this.httpClient.get(`${this.apiURL}${api}`, {params});
   }
 
+  delete(api): Observable<any> {
+    return this.httpClient.delete(`${this.apiURL}${api}`);
+  }
+
 }

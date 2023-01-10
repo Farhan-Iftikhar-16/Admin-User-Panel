@@ -76,10 +76,10 @@ export class UserContractsComponent implements OnInit {
 
   onSubscribeClicked(contract): void {
     this.selectedContract = contract;
-    if (this.customer && this.customer.default_source) {
-      this.payAmount();
-      return;
-    }
+    // if (this.customer && this.customer.default_source) {
+    //   this.payAmount();
+    //   return;
+    // }
 
     this.showStripePaymentDialog = true
   }

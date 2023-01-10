@@ -69,4 +69,26 @@ export class UserService {
 
     return this.apiService.get(`stripe/subscriptions`);
   }
+
+  getCanceledSubscriptions(customerId?: string): Observable<any> {
+    if (customerId) {
+      let queryParams = new HttpParams();
+      queryParams = queryParams.set('customer', customerId);
+      return this.apiService.get(`stripe/canceled-subscriptions`, queryParams);
+    }
+
+    return this.apiService.get(`stripe/canceled-subscriptions`);
+  }
+
+  deleteSubscription(id): Observable<any> {
+    return this.apiService.delete(`stripe/delete-subscription/${id}`);
+  }
+
+  updateDefaultSource(params): Observable<any> {
+    return this.apiService.put(`stripe/update-default-source`, params);
+  }
+
+  getCustomerCards(id): Observable<any> {
+    return this.apiService.get(`stripe/get-customer-card/${id}`);
+  }
 }

@@ -9,42 +9,85 @@
 
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12">
-      <p-table [value]="subscriptions" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
-               currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
-        <ng-template pTemplate="header">
-          <tr>
-            <th style="width: 20%" *ngIf="user.role === 'ADMIN'">Customer</th>
-            <th style="width: 15%">Subscriptions ID</th>
-            <th style="width: 15%">Product</th>
-            <th style="width: 10%">Price</th>
-            <th style="width: 12%">Started</th>
-            <th style="width: 20%">Next Invoice</th>
-            <th style="width: 18%">Billing method</th>
-            <th style="width: 5%">Status</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-subscription>
-          <tr>
-            <td *ngIf="user.role === 'ADMIN'">
-              <p>{{subscription.customer.name | titlecase}}</p>
-              <p>{{subscription.customer.email}}</p>
-            </td>
-            <td>{{subscription.id}}</td>
-            <td>{{subscription.product.name}}</td>
-            <td>$ {{(subscription.plan.amount / 100).toFixed(2)}}</td>
-            <td>{{getDate(subscription.billing_cycle_anchor)}}</td>
-            <td>$ {{(subscription.plan.amount / 100).toFixed(2)}} on {{getDate(subscription.current_period_end)}}</td>
-            <td>{{getDisplayAbleText(subscription.collection_method) | titlecase}}</td>
-            <td>{{subscription.status | titlecase}}</td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-          <tr>
-            <td [colSpan]="user.role === 'Admin' ? 8 : 7">No subscriptions found.</td>
-          </tr>
-        </ng-template>
-      </p-table>
+      <p-tabView (onChange)="$event.index === 0 ? getSubscriptions() : getCanceledSubscriptions()">
+        <p-tabPanel header="Active">
+          <p-table [value]="subscriptions" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+                   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+            <ng-template pTemplate="header">
+              <tr>
+                <th *ngIf="user.role === 'ADMIN'">Customer</th>
+                <th>Subscriptions ID</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Started</th>
+                <th>Next Invoice</th>
+                <th>Billing method</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-subscription>
+              <tr>
+                <td *ngIf="user.role === 'ADMIN'">
+                  <p>{{subscription.customer.name | titlecase}}</p>
+                  <p>{{subscription.customer.email}}</p>
+                </td>
+                <td>{{subscription.id}}</td>
+                <td>{{subscription.product.name}}</td>
+                <td>$ {{(subscription.plan.amount / 100).toFixed(2)}}</td>
+                <td>{{getDate(subscription.billing_cycle_anchor)}}</td>
+                <td>$ {{(subscription.plan.amount / 100).toFixed(2)}} on {{getDate(subscription.current_period_end)}}</td>
+                <td>{{getDisplayAbleText(subscription.collection_method) | titlecase}}</td>
+                <td>{{subscription.status | titlecase}}</td>
+                <td><i *ngIf="subscription.status !== 'canceled' && user.role === 'ADMIN'" class="pi pi-times" [pTooltip]="'Cancel Subscription'"  [tooltipPosition]="'left'" (click)="cancelSubscription(subscription.id)"></i></td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td [colSpan]="user.role === 'Admin' ? 8 : 7">No subscriptions found.</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-tabPanel>
 
+        <p-tabPanel header="Canceled">
+          <p-table [value]="canceledSubscriptions" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+                   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 20%" *ngIf="user.role === 'ADMIN'">Customer</th>
+                <th style="width: 15%">Subscriptions ID</th>
+                <th style="width: 15%">Product</th>
+                <th style="width: 10%">Price</th>
+                <th style="width: 12%">Started</th>
+                <th style="width: 20%">Next Invoice</th>
+                <th style="width: 18%">Billing method</th>
+                <th style="width: 5%">Status</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-subscription>
+              <tr>
+                <td *ngIf="user.role === 'ADMIN'">
+                  <p>{{subscription.customer.name | titlecase}}</p>
+                  <p>{{subscription.customer.email}}</p>
+                </td>
+                <td>{{subscription.id}}</td>
+                <td>{{subscription.product.name}}</td>
+                <td>$ {{(subscription.plan.amount / 100).toFixed(2)}}</td>
+                <td>{{getDate(subscription.billing_cycle_anchor)}}</td>
+                <td>$ {{(subscription.plan.amount / 100).toFixed(2)}} on {{getDate(subscription.current_period_end)}}</td>
+                <td>{{getDisplayAbleText(subscription.collection_method) | titlecase}}</td>
+                <td>{{subscription.status | titlecase}}</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td [colSpan]="user.role === 'Admin' ? 8 : 7">No subscriptions found.</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-tabPanel>
+      </p-tabView>
     </div>
   </div>
 </div>

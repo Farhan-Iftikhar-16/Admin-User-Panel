@@ -13,20 +13,20 @@ export class ContractService {
   }
 
   createContract(params): Observable<any> {
-    const formDate = new FormData();
+    const formData = new FormData();
 
     for (let key in  params) {
-      formDate.append(key, params[key]);
+      formData.append(key, params[key]);
     }
 
-    return this.apiService.post(`contracts/create-contract`, formDate);
+    return this.apiService.post(`contracts/create-contract`, formData);
   }
 
   updateContract(params): Observable<any> {
-    const formDate = new FormData();
+    const formData = new FormData();
 
     for (let key in  params) {
-      formDate.append(key, params[key]);
+      formData.append(key, params[key]);
     }
 
     return this.apiService.put(`contract/update-contract`, params);
