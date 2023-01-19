@@ -4,6 +4,7 @@ import {UserService} from "../../../user/user.service";
 import {ToastService} from "../../../services/toast.service";
 import * as moment from "moment";
 import {ROLES} from "../../../config/constant";
+import {ConfirmationService} from 'primeng/api';
 
 @Component({
   selector: 'app-user-subscriptions',
@@ -19,7 +20,8 @@ export class UserSubscriptionsComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit(): void {
@@ -51,6 +53,16 @@ export class UserSubscriptionsComponent implements OnInit {
 
   getDisplayAbleText(text): string {
     return text.split('_').join(' ');
+  }
+
+  onCancelSubscriptionClicked(id): void {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to cancel subscription?',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.cancelSubscription(id)
+      },
+    });
   }
 
   cancelSubscription(id): void {

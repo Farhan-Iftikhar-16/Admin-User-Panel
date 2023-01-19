@@ -9,6 +9,7 @@ import { ViewContractComponent } from './view-contract/view-contract.component';
 import { TransactionsComponent } from '../shared/components/transactions/transactions.component';
 import { UserSubscriptionsComponent } from '../shared/components/user-subscriptions/user-subscriptions.component';
 import { CardsComponent } from './cards/cards.component';
+import { EditCardComponent } from './edit-card/edit-card.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { CardsComponent } from './cards/cards.component';
     ViewContractComponent,
     TransactionsComponent,
     UserSubscriptionsComponent,
-    CardsComponent
+    CardsComponent,
+    EditCardComponent
   ],
   imports: [
     CommonModule,

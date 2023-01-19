@@ -35,6 +35,9 @@ import {CarouselModule} from 'primeng/carousel';
 import {EditUserComponent} from './components/edit-user/edit-user.component';
 import {FileUploadModule} from "primeng/fileupload";
 import {StripePaymentFormComponent} from './components/stripe-payment-form/stripe-payment-form.component';
+import {ConfirmationService} from 'primeng/api';
+import {InputMaskModule} from 'primeng/inputmask';
+
 
 const MODULES = [
   FormsModule,
@@ -53,6 +56,7 @@ const MODULES = [
   RatingModule,
   TreeModule,
   PasswordModule,
+  InputMaskModule,
   DialogModule,
   CalendarModule,
   ConfirmDialogModule,
@@ -83,7 +87,7 @@ const COMPONENTS = [
   declarations: COMPONENTS,
   imports: [CommonModule, ...MODULES, RouterModule],
   exports: [...MODULES, ...COMPONENTS],
-  providers: []
+  providers: [ConfirmationService]
 })
 export class SharedModule {
 }

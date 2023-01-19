@@ -1,0 +1,52 @@
+<div class="edit-Contract-container" *ngIf="form">
+  <div class="row mb-3">
+    <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-center align-items-center">
+      <div class="main-heading">
+        <h3>Add Card</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <form [formGroup]="form">
+        <div class="contract-details-container">
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+              <div class="form-group">
+                <app-form-control>
+                  <label for="number">Number <span class="required">*</span></label>
+                  <p-inputMask slotChar="" [formControlName]="'number'" id="number" mask="9999 9999 9999 9999"></p-inputMask>
+                </app-form-control>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12 mb-3">
+              <app-form-control>
+                <label for="month">Month <span class="required">*</span></label>
+                <p-inputMask slotChar="" [formControlName]="'expiryMonth'" id="month" mask="99"></p-inputMask>
+              </app-form-control>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-12 mb-3">
+              <app-form-control>
+                <label for="year">Year <span class="required">*</span></label>
+                <p-inputMask slotChar="" [formControlName]="'expiryYear'" id="year" mask="9999"></p-inputMask>
+              </app-form-control>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-12 mb-3">
+              <app-form-control>
+                <label for="cvc">CVC <span class="required">*</span></label>
+                <p-inputMask slotChar="" [formControlName]="'cvc'" id="cvc" mask="999"></p-inputMask>
+              </app-form-control>
+            </div>
+          </div>
+        </div>
+        <p-button [disabled]="form.invalid" [label]="'Add Card'" class="p-button-success pb-3" (click)="addCard()"></p-button>
+      </form>
+    </div>
+  </div>
+</div>

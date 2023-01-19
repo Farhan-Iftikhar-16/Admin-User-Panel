@@ -39,7 +39,7 @@
                 <td>$ {{(subscription.plan.amount / 100).toFixed(2)}} on {{getDate(subscription.current_period_end)}}</td>
                 <td>{{getDisplayAbleText(subscription.collection_method) | titlecase}}</td>
                 <td>{{subscription.status | titlecase}}</td>
-                <td><i *ngIf="subscription.status !== 'canceled' && user.role === 'ADMIN'" class="pi pi-times" [pTooltip]="'Cancel Subscription'"  [tooltipPosition]="'left'" (click)="cancelSubscription(subscription.id)"></i></td>
+                <td><i *ngIf="subscription.status !== 'canceled' && user.role === 'ADMIN'" class="pi pi-times" [pTooltip]="'Cancel Subscription'"  [tooltipPosition]="'left'" (click)="onCancelSubscriptionClicked(subscription.id)"></i></td>
               </tr>
             </ng-template>
             <ng-template pTemplate="emptymessage">
@@ -91,4 +91,6 @@
     </div>
   </div>
 </div>
+
+<p-confirmDialog header="Confirmation" position="top" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 

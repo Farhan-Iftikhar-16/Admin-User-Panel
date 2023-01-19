@@ -26,7 +26,8 @@ export class UserContractsComponent implements OnInit {
     private toastService: ToastService,
     private contractService: ContractService,
     private userService: UserService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {
   }
 
@@ -52,7 +53,7 @@ export class UserContractsComponent implements OnInit {
   contractSigned(contractId): void {
     this.contractService.contractSigned(contractId).pipe(takeUntil(this.componentInView)).subscribe(response => {
       this.toastService.success(response.message);
-      this.getContractsByUserId();
+      this.router.navigate([]).then();
     }, error => {
       this.toastService.error(error.error.message);
     });

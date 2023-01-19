@@ -13,6 +13,7 @@ export class CardsComponent implements OnInit {
   user;
   customer;
   cards = [];
+  showAddCardDialog = false;
   componentInView = new Subject();
 
   constructor(

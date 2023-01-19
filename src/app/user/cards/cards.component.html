@@ -1,9 +1,11 @@
 <div class="cards-container">
   <div class="row mb-3">
-    <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="col-lg-12 col-md-12 col-sm-12 d-flex align-items-center justify-content-between">
       <div class="main-heading">
         <h3>Cards</h3>
       </div>
+
+      <p-button [label]="'Add Card'" class="p-button-primary" (click)="showAddCardDialog = true"></p-button>
     </div>
   </div>
 
@@ -13,25 +15,34 @@
                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
         <ng-template pTemplate="header">
           <tr>
-            <th style="width: 60%">Card ID</th>
-            <th style="width: 20%">Brand</th>
+            <th style="width: 30%">Card Last 4 Digits</th>
+            <th style="width: 20%">Expiry Month / Year</th>
+            <th style="width: 20%">CVC check</th>
+            <th style="width: 10%">Brand</th>
             <th style="width: 20%"></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-card>
           <tr>
-            <td>{{card.id}}</td>
+            <td>**** **** **** {{card.last4}}</td>
+            <td>{{card.exp_month.toString().length === 1 ? '0' + card.exp_month : card.exp_month}} / {{card.exp_year}}</td>
+            <td>{{card.cvc_check === 'pass' ? 'Passed' : 'Failed'}} <i *ngIf="card.cvc_check === 'pass'" class="ms-2 pi pi-check-circle"></i></td>
             <td>{{card.brand}}</td>
             <td><button *ngIf="customer.default_source !== card.id" pButton label="Make Default Source" (click)="makeCardDefaultSource(card)"></button></td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
           <tr>
-            <td colspan="3">No cards found.</td>
+            <td colspan="5">No cards found.</td>
           </tr>
         </ng-template>
       </p-table>
-
     </div>
   </div>
 </div>
+
+<p-dialog [(visible)]="showAddCardDialog" (onHide)="showAddCardDialog = false" [draggable]="false" [resizable]="false" [modal]="true" [closeOnEscape]="true">
+  <app-edit-card  *ngIf="showAddCardDialog" (closeDialog)="showAddCardDialog = false; getCustomerCards()"></app-edit-card>
+</p-dialog>
+
+

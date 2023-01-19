@@ -91,4 +91,8 @@ export class UserService {
   getCustomerCards(id): Observable<any> {
     return this.apiService.get(`stripe/get-customer-card/${id}`);
   }
+
+  addCard(params): Observable<any> {
+    return this.apiService.post(`stripe/add-card`, params);
+  }
 }
