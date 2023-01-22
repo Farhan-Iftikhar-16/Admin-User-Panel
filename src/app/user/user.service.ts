@@ -88,6 +88,10 @@ export class UserService {
     return this.apiService.put(`stripe/update-default-source`, params);
   }
 
+  deleteCard(customer, card): Observable<any> {
+    return this.apiService.delete(`stripe/delete-card/${customer}/${card}`);
+  }
+
   getCustomerCards(id): Observable<any> {
     return this.apiService.get(`stripe/get-customer-card/${id}`);
   }

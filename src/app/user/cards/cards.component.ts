@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Subject, takeUntil} from "rxjs";
 import {ToastService} from "../../services/toast.service";
 import {UserService} from "../user.service";
+import {ConfirmationService} from "primeng/api";
 
 @Component({
   selector: 'app-cards',
@@ -18,7 +19,8 @@ export class CardsComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit(): void {
@@ -45,7 +47,7 @@ export class CardsComponent implements OnInit {
 
   makeCardDefaultSource(card): void {
     const params = {
-      id: this.user.customer,
+      customer: this.user.customer,
       card: card.id
     };
     this.userService.updateDefaultSource(params).pipe(takeUntil(this.componentInView)).subscribe(response => {
@@ -56,4 +58,17 @@ export class CardsComponent implements OnInit {
     });
   }
 
+  deleteCard(card): void {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this card?',
+      accept: () => {
+        this.userService.deleteCard(this.user.customer, card.id).pipe(takeUntil(this.componentInView)).subscribe(response => {
+          this.toastService.success(response.message);
+          this.getCustomer();
+        }, error => {
+          this.toastService.error(error);
+        });
+      }
+    });
+  }
 }

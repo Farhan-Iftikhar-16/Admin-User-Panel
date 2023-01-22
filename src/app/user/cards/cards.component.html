@@ -15,11 +15,11 @@
                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
         <ng-template pTemplate="header">
           <tr>
-            <th style="width: 30%">Card Last 4 Digits</th>
-            <th style="width: 20%">Expiry Month / Year</th>
+            <th style="width: 25%">Card Last 4 Digits</th>
+            <th style="width: 15%">Expiry Month / Year</th>
             <th style="width: 20%">CVC check</th>
             <th style="width: 10%">Brand</th>
-            <th style="width: 20%"></th>
+            <th style="width: 45%"></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-card>
@@ -28,7 +28,10 @@
             <td>{{card.exp_month.toString().length === 1 ? '0' + card.exp_month : card.exp_month}} / {{card.exp_year}}</td>
             <td>{{card.cvc_check === 'pass' ? 'Passed' : 'Failed'}} <i *ngIf="card.cvc_check === 'pass'" class="ms-2 pi pi-check-circle"></i></td>
             <td>{{card.brand}}</td>
-            <td><button *ngIf="customer.default_source !== card.id" pButton label="Make Default Source" (click)="makeCardDefaultSource(card)"></button></td>
+            <td>
+              <button *ngIf="customer.default_source !== card.id" pButton label="Make Default Source" (click)="makeCardDefaultSource(card)"></button>
+              <button class="p-button-danger ms-3" *ngIf="customer.default_source !== card.id" pButton label="Delete" (click)="deleteCard(card)"></button>
+            </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
@@ -45,4 +48,4 @@
   <app-edit-card  *ngIf="showAddCardDialog" (closeDialog)="showAddCardDialog = false; getCustomerCards()"></app-edit-card>
 </p-dialog>
 
-
+<p-confirmDialog header="Confirmation" position="top" icon="pi pi-exclamation-triangle"></p-confirmDialog>
