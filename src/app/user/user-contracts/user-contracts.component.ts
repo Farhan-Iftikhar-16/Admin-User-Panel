@@ -32,13 +32,7 @@ export class UserContractsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (localStorage.getItem('user')) {
-      this.user = JSON.parse(localStorage.getItem('user'));
-
-      if (this.user.customer) {
-        this.getCustomerById();
-      }
-    }
+    this.getCustomerById();
 
     this.activatedRoute.queryParams.subscribe(params => {
       if (params.state && params.contract && params.event === 'signing_complete') {
@@ -68,11 +62,17 @@ export class UserContractsComponent implements OnInit {
   }
 
   getCustomerById(): void {
-    this.userService.getCustomerById(this.user.customer).pipe(takeUntil(this.componentInView)).subscribe(response => {
-      this.customer = response.customer;
-    }, error => {
-      this.toastService.error(error.error.message);
-    });
+    if (localStorage.getItem('user')) {
+      this.user = JSON.parse(localStorage.getItem('user'));
+
+      if (this.user.customer) {
+        this.userService.getCustomerById(this.user.customer).pipe(takeUntil(this.componentInView)).subscribe(response => {
+          this.customer = response.customer;
+        }, error => {
+          this.toastService.error(error.error.message);
+        });
+      }
+    }
   }
 
   onSubscribeClicked(contract): void {
