@@ -16,7 +16,9 @@ export class EditContractComponent implements OnInit {
 
   user;
   users;
+  consentRequiredURL;
   uploadDocumentName;
+  createdContractDocKey;
   form: FormGroup;
   maxDate = new Date();
   contractTypes = [
@@ -30,6 +32,7 @@ export class EditContractComponent implements OnInit {
     {label: 'Month(s)', value: 'MONTH'},
     {label: 'Year(s)', value: 'YEAR'}
   ];
+  isConsentRequired = false;
   componentInView = new Subject();
   @ViewChild('autoComplete') autoComplete: ElementRef;
   @ViewChild('fileUpload') fileUpload: ElementRef;
@@ -57,6 +60,21 @@ export class EditContractComponent implements OnInit {
         this.getContractDetails(params.id);
       }
     });
+
+    this.activatedRoute.queryParams.pipe(takeUntil(this.componentInView)).subscribe(queryParams => {
+      console.log(queryParams);
+      if (queryParams.error && queryParams.error === 'access_denied') {
+        this.toastService.error(queryParams.error_message);
+        return;
+      }
+
+      if (queryParams.code) {
+        const contract = localStorage.getItem('contractID');
+        if (contract) {
+          this.createContractSigningURL(contract);
+        }
+      }
+    })
   }
 
   createForm(): void {
@@ -111,6 +129,12 @@ export class EditContractComponent implements OnInit {
   createContract(params): void {
     this.contractService.createContract(params).pipe(takeUntil(this.componentInView)).subscribe(response => {
       this.toastService.success(response.message);
+      if (response.type === 'CONSENT_REQUIRED') {
+        this.isConsentRequired = true;
+        this.consentRequiredURL = response.consentRequiredURL;
+        localStorage.setItem('contractID', response.id);
+        return;
+      }
       this.router.navigate(['/admin/contracts']).then();
     }, error => {
       this.toastService.error(error.error.message);
@@ -121,6 +145,23 @@ export class EditContractComponent implements OnInit {
     this.contractService.updateContract(params).pipe(takeUntil(this.componentInView)).subscribe(response => {
       this.toastService.success(response.message);
       this.router.navigate(['/admin/users']).then();
+    }, error => {
+      this.toastService.error(error.error.message);
+    });
+  }
+
+  onRedirectClicked(): void {
+    const link = document.createElement('a');
+    link.href = this.consentRequiredURL;
+    link.click();
+    link.remove();
+    return;
+  }
+
+  createContractSigningURL(contractId): void {
+    this.contractService.createContractSigningURL(contractId).pipe(takeUntil(this.componentInView)).subscribe(response => {
+      this.toastService.success(response.message);
+      this.router.navigate(['/admin/contracts']).then();
     }, error => {
       this.toastService.error(error.error.message);
     });

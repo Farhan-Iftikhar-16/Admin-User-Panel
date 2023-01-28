@@ -51,4 +51,8 @@ export class ContractService {
   contractSigned(contractId): Observable<any> {
     return this.apiService.put(`contracts/contract-signed`, {contractId: contractId});
   }
+
+  createContractSigningURL(contractId): Observable<any> {
+    return this.apiService.post(`contracts/create-signing-URL`, {contractId: contractId});
+  }
 }
