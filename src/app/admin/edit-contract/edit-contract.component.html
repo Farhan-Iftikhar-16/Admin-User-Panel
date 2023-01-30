@@ -94,7 +94,7 @@
 
   <ng-container *ngIf="isConsentRequired">
     <div class="row">
-      <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-center align-items-center">
+      <div class="col-lg-12 col-md-12 col-sm-12 d-flex flex-column align-items-center">
         <p>Consent is required. Please click below button to proceed otherwise contract signing procedure will will not be happen.</p>
         <p-button [label]="'Redirect'" class="p-button-success pb-3" (click)="onRedirectClicked()"></p-button>
       </div>
