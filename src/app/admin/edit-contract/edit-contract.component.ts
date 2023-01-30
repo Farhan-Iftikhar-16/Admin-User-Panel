@@ -32,7 +32,7 @@ export class EditContractComponent implements OnInit {
     {label: 'Month(s)', value: 'MONTH'},
     {label: 'Year(s)', value: 'YEAR'}
   ];
-  isConsentRequired = true;
+  isConsentRequired = false;
   componentInView = new Subject();
   @ViewChild('autoComplete') autoComplete: ElementRef;
   @ViewChild('fileUpload') fileUpload: ElementRef;
