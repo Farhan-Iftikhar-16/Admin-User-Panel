@@ -48,6 +48,7 @@ export class UserContractsComponent implements OnInit {
     this.contractService.contractSigned(contractId).pipe(takeUntil(this.componentInView)).subscribe(response => {
       this.toastService.success(response.message);
       this.router.navigate([]).then();
+      this.getContractsByUserId();
     }, error => {
       this.toastService.error(error.error.message);
     });
