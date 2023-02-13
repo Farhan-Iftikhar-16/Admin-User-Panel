@@ -28,7 +28,7 @@ export class TransactionsComponent implements OnInit {
 
   getUserTransactions(): void {
     this.userService.getUserTransactions(this.user.role === ROLES.CUSTOMER ? this.user.customer : null).pipe(takeUntil(this.componentInView)).subscribe(response => {
-      this.transactions = response.transactions;
+      this.transactions = response.transactions && response.transactions.length > 0 ? response.transactions.filter(item => item.type === 'charge') : [];
     }, error => {
       this.toastService.error(error);
     })
